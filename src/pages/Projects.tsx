@@ -1,355 +1,195 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import { Search, Github, ExternalLink, Star, GitFork, Users, Filter } from 'lucide-react';
-import PageTransition from '../components/PageTransition';
-
-type ProjectCategory = 'all' | 'web' | 'mobile' | 'ai' | 'blockchain' | 'iot';
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  category: Exclude<ProjectCategory, 'all'>;
-  image: string;
-  tech: string[];
-  github: string;
-  demo?: string;
-  stars: number;
-  forks: number;
-  contributors: number;
-  featured: boolean;
-}
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Github, ExternalLink, Code, Users, Star, GitFork, Rocket } from 'lucide-react';
+import { useState, useRef } from 'react';
+import ProjectTimeline from '../components/ProjectTimeline';
+import TechStackOverview from '../components/TechStackOverview';
+import ContributionStats from '../components/ContributionStats';
 
 export default function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const containerRef = useRef(null);
 
-  const categories: { value: ProjectCategory; label: string; icon: string }[] = [
-    { value: 'all', label: 'All Projects', icon: '🎯' },
-    { value: 'web', label: 'Web Apps', icon: '🌐' },
-    { value: 'mobile', label: 'Mobile Apps', icon: '📱' },
-    { value: 'ai', label: 'AI/ML', icon: '🤖' },
-    { value: 'blockchain', label: 'Blockchain', icon: '⛓️' },
-    { value: 'iot', label: 'IoT', icon: '🔌' }
-  ];
-
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "GFG Learning Platform",
-      description: "An interactive learning platform for coding practice and tutorials.",
-      category: "web",
-      image: "https://your-image-url.com/project1.jpg",
-      tech: ["React", "Node.js", "MongoDB", "TypeScript"],
-      github: "https://github.com/gfg-kiit/learning-platform",
-      demo: "https://learn.gfgkiit.in",
-      stars: 120,
-      forks: 45,
-      contributors: 12,
-      featured: true
-    },
-    // Add more projects...
-  ];
-
-  const filteredProjects = projects.filter(project => {
-    const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  // Add a featured projects section
-  const featuredProjects = [
-    {
-      title: "GFG Learning Platform",
-      description: "An interactive platform for coding practice.",
-      link: "https://github.com/gfg-kiit/learning-platform",
-    },
-    // Add more featured projects...
-  ];
+  const projects = {
+    featured: [
+      {
+        title: "AI Code Assistant",
+        description: "An intelligent coding assistant powered by machine learning",
+        tech: ["Python", "TensorFlow", "React"],
+        image: "/projects/ai-assistant.jpg",
+        github: "https://github.com/...",
+        live: "https://demo...",
+        category: "AI/ML",
+        stats: {
+          stars: 120,
+          forks: 45,
+          contributors: 8
+        }
+      }
+    ]
+  };
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-black pt-24 pb-12">
-        <div className="container mx-auto px-6">
-          {/* Header with Featured Project */}
+    <div className="relative min-h-screen" ref={containerRef}>
+      {/* Modern Background */}
+      <div className="fixed inset-0">
+        <div className="absolute inset-0 bg-[#0a0f0a] z-10" />
+        <div className="absolute inset-0 grid-pattern z-20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(4,24,12,0.9)] to-[#0a0f0a] z-30" />
+      </div>
+
+      <div className="relative z-40 pt-24 pb-20">
+        {/* Hero Section */}
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center mb-24"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-block mb-6"
           >
-            {projects.filter(p => p.featured)[0] && (
-              <div className="relative rounded-2xl overflow-hidden">
-                <div className="absolute inset-0">
-                  <img
-                    src={projects.filter(p => p.featured)[0].image}
-                    alt="Featured Project"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
-                </div>
-                
-                <div className="relative p-8 md:p-12">
-                  <span className="inline-block px-4 py-1 rounded-full bg-green-500/20 text-green-400 
-                    backdrop-blur-sm text-sm font-medium mb-4">
-                    Featured Project
-                  </span>
-                  
-                  <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                    {projects.filter(p => p.featured)[0].title}
-                  </h1>
-                  
-                  <p className="text-xl text-gray-300 max-w-2xl mb-6">
-                    {projects.filter(p => p.featured)[0].description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {projects.filter(p => p.featured)[0].tech.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 rounded-full bg-white/10 text-sm backdrop-blur-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+            <div className="relative">
+              <div className="absolute inset-0 bg-green-500/20 blur-xl rounded-full" />
+              <div className="relative bg-black/30 backdrop-blur-sm px-8 py-3 rounded-full border border-green-500/20">
+                <span className="text-green-400 font-medium">Explore Our Work</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
+            Our Projects
+          </h1>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Discover our innovative solutions and technical achievements
+          </p>
+        </motion.section>
+
+        {/* Project Categories */}
+        <section className="container mx-auto px-6 mb-16">
+          <div className="flex justify-center gap-4 flex-wrap">
+            {['all', 'web', 'mobile', 'AI/ML', 'blockchain'].map((category) => (
+              <motion.button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  activeCategory === category
+                    ? 'bg-green-500 text-black'
+                    : 'bg-black/20 text-gray-400 hover:bg-black/30'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </motion.button>
+            ))}
+          </div>
+        </section>
+
+        {/* Featured Projects */}
+        <section className="container mx-auto px-6 mb-32">
+          <h2 className="text-3xl font-bold mb-16">Featured Projects</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {projects.featured.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="group"
+              >
+                <div className="relative rounded-2xl bg-black/20 backdrop-blur-md
+                  border border-white/5 overflow-hidden transition-all duration-500
+                  hover:border-green-500/30 hover:shadow-[0_0_30px_-12px] hover:shadow-green-500/20"
+                >
+                  {/* Project Image */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <img 
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                   </div>
-                  
-                  <div className="flex gap-4">
-                    <a
-                      href={projects.filter(p => p.featured)[0].github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 
-                        backdrop-blur-sm transition-colors"
+
+                  {/* Project Content */}
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-green-400 
+                      transition-colors duration-300"
                     >
-                      <Github className="h-5 w-5" />
-                      View Source
-                    </a>
-                    {projects.filter(p => p.featured)[0].demo && (
+                      {project.title}
+                    </h3>
+
+                    <p className="text-gray-400 mb-6">{project.description}</p>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.tech.map((tech, i) => (
+                        <span key={i} className="px-3 py-1 rounded-full text-sm
+                          bg-green-500/10 text-green-400 border border-green-500/20"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Project Stats */}
+                    <div className="flex items-center gap-6 mb-6 text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <Star className="w-4 h-4" />
+                        <span>{project.stats.stars}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <GitFork className="w-4 h-4" />
+                        <span>{project.stats.forks}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        <span>{project.stats.contributors}</span>
+                      </div>
+                    </div>
+
+                    {/* Action Links */}
+                    <div className="flex gap-4">
                       <a
-                        href={projects.filter(p => p.featured)[0].demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 
-                          transition-colors"
+                        href={project.github}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg
+                          bg-black/30 text-white hover:bg-black/50 transition-all duration-300"
                       >
-                        <ExternalLink className="h-5 w-5" />
+                        <Github className="w-4 h-4" />
+                        View Code
+                      </a>
+                      <a
+                        href={project.live}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg
+                          bg-green-500 text-black hover:bg-green-600 transition-all duration-300"
+                      >
+                        <ExternalLink className="w-4 h-4" />
                         Live Demo
                       </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </motion.div>
-
-          {/* Filters */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-12"
-          >
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              {/* Search */}
-              <div className="relative w-full md:w-96">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-zinc-900/50 border border-white/10 
-                    focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors"
-                />
-              </div>
-
-              {/* Category Filters */}
-              <div className="hidden md:flex items-center gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category.value}
-                    onClick={() => setSelectedCategory(category.value)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                      selectedCategory === category.value
-                        ? 'bg-green-600 text-white'
-                        : 'bg-zinc-900/50 text-gray-400 hover:bg-zinc-800'
-                    }`}
-                  >
-                    <span>{category.icon}</span>
-                    {category.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Mobile Filter Button */}
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="md:hidden w-full px-4 py-3 rounded-xl bg-zinc-900/50 border border-white/10
-                  flex items-center justify-center gap-2"
-              >
-                <Filter className="h-5 w-5" />
-                Filters
-              </button>
-            </div>
-
-            {/* Mobile Filters */}
-            <AnimatePresence>
-              {showFilters && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="md:hidden overflow-hidden mt-4"
-                >
-                  <div className="grid grid-cols-2 gap-2">
-                    {categories.map((category) => (
-                      <button
-                        key={category.value}
-                        onClick={() => setSelectedCategory(category.value)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                          selectedCategory === category.value
-                            ? 'bg-green-600 text-white'
-                            : 'bg-zinc-900/50 text-gray-400 hover:bg-zinc-800'
-                        }`}
-                      >
-                        <span>{category.icon}</span>
-                        {category.label}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Projects Grid */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.filter(p => !p.featured).map((project) => (
-                <motion.div
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-b from-green-500/10 to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-                  
-                  <div className="relative overflow-hidden rounded-xl bg-zinc-900/50 border border-white/10
-                    hover:border-white/20 transition-all duration-300">
-                    {/* Project Image */}
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-
-                    {/* Project Details */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-green-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      
-                      <p className="text-gray-400 mb-4 line-clamp-2">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tech.map((tech, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-1 rounded-full bg-white/5 text-xs text-gray-400"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4" />
-                            {project.stars}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <GitFork className="h-4 w-4" />
-                            {project.forks}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Users className="h-4 w-4" />
-                            {project.contributors}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 
-                            flex items-center justify-center gap-2 transition-colors"
-                        >
-                          <Github className="h-4 w-4" />
-                          Source
-                        </a>
-                        {project.demo && (
-                          <a
-                            href={project.demo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 py-2 rounded-lg bg-green-600 hover:bg-green-700 
-                              flex items-center justify-center gap-2 transition-colors"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                            Demo
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-
-          {/* No Results */}
-          {filteredProjects.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-12"
-            >
-              <p className="text-gray-400 text-lg">No projects found matching your criteria.</p>
-            </motion.div>
-          )}
-
-          {/* Featured Projects */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold text-center mb-6">Featured Projects</h2>
-            <div className="space-y-4">
-              {featuredProjects.map((project, index) => (
-                <div key={index} className="p-4 bg-zinc-900 rounded-lg shadow-lg">
-                  <h3 className="font-bold">{project.title}</h3>
-                  <p className="text-gray-400">{project.description}</p>
-                  <a href={project.link} className="text-green-400 hover:underline">View Project</a>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </section>
+
+        {/* Project Timeline */}
+        <section className="container mx-auto px-6 mb-32">
+          <ProjectTimeline projects={projects} />
+        </section>
+
+        {/* Tech Stack Overview */}
+        <section className="container mx-auto px-6 mb-32">
+          <TechStackOverview />
+        </section>
+
+        {/* Contribution Stats */}
+        <section className="container mx-auto px-6">
+          <ContributionStats />
+        </section>
       </div>
-    </PageTransition>
+    </div>
   );
 }

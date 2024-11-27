@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Code2, Users, Trophy, Target, BookOpen, Rocket } from 'lucide-react';
+import { Code2, Users, Trophy, Target, BookOpen, Rocket, Milestone, ArrowRight, Award, Code } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 export default function About() {
@@ -46,6 +46,37 @@ export default function About() {
       feedback: "The community is incredibly supportive and engaging.",
     },
     // Add more testimonials...
+  ];
+
+  const journeyMilestones = [
+    {
+      year: "2019",
+      title: "The Beginning",
+      description: "Started with a small group of passionate tech enthusiasts at KIIT",
+      icon: Users,
+      stats: "20+ founding members"
+    },
+    {
+      year: "2020",
+      title: "Community Growth",
+      description: "Expanded our reach and conducted our first virtual events",
+      icon: Award,
+      stats: "100+ members joined"
+    },
+    {
+      year: "2021",
+      title: "Major Achievements",
+      description: "Recognized as one of the most active technical chapters",
+      icon: Trophy,
+      stats: "30+ events conducted"
+    },
+    {
+      year: "2022-23",
+      title: "Innovation Hub",
+      description: "Launched multiple successful projects and initiatives",
+      icon: Code,
+      stats: "500+ active participants"
+    }
   ];
 
   return (
@@ -130,45 +161,104 @@ export default function About() {
                 })}
               </div>
 
+              {/* Journey Section Header */}
+              <div className="text-center mb-16">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-4xl font-bold mb-4"
+                >
+                  Our Journey
+                </motion.h2>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-gray-400 max-w-2xl mx-auto"
+                >
+                  From a small group of enthusiasts to KIIT's largest technical community
+                </motion.p>
+              </div>
+
               {/* Timeline */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="max-w-4xl mx-auto"
-              >
-                <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Our Journey</h2>
+              <div className="max-w-6xl mx-auto px-6">
                 <div className="relative">
                   {/* Timeline Line */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-px h-full bg-green-500/20" />
-                  
-                  {/* Timeline Items */}
-                  {[
-                    { year: "2019", title: "Chapter Founded", description: "Started with 50 members" },
-                    { year: "2020", title: "Virtual Transition", description: "Adapted to online learning" },
-                    { year: "2021", title: "Community Growth", description: "Reached 300+ members" },
-                    { year: "2022", title: "Major Events", description: "Hosted KIIT's largest hackathon" },
-                    { year: "2023", title: "Innovation Hub", description: "Launched research initiatives" }
-                  ].map((item, index) => (
+                  <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-green-500/50 to-transparent" />
+
+                  {/* Milestones */}
+                  {journeyMilestones.map((milestone, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 + index * 0.1 }}
-                      className={`relative flex items-center justify-center mb-12 ${
-                        index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'
+                      transition={{ delay: index * 0.2 }}
+                      className={`relative flex items-center gap-8 mb-16 ${
+                        index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
                       }`}
                     >
-                      <div className="w-full md:w-[calc(50%-2rem)] p-6 rounded-xl bg-zinc-900/50 border border-white/10
-                        hover:border-white/20 transition-colors relative group">
-                        <div className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-500
-                          ${index % 2 === 0 ? 'md:-right-8' : 'md:-left-8'}" />
-                        <span className="text-green-400 font-bold mb-2 block">{item.year}</span>
-                        <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                        <p className="text-gray-400">{item.description}</p>
+                      {/* Content Card */}
+                      <div className="w-1/2 group">
+                        <div className="relative p-6 rounded-2xl bg-black/30 backdrop-blur-sm
+                          border border-white/10 hover:border-green-500/30
+                          transition-all duration-300 hover:shadow-[0_0_30px_-12px] hover:shadow-green-500/20"
+                        >
+                          {/* Year Badge */}
+                          <div className="absolute -top-3 bg-green-500 text-black px-4 py-1 
+                            rounded-full text-sm font-semibold"
+                          >
+                            {milestone.year}
+                          </div>
+
+                          {/* Content */}
+                          <div className="pt-4">
+                            <milestone.icon className="h-6 w-6 text-green-400 mb-3" />
+                            <h3 className="text-xl font-bold mb-2 text-white">
+                              {milestone.title}
+                            </h3>
+                            <p className="text-gray-400 mb-4">
+                              {milestone.description}
+                            </p>
+                            <div className="text-green-400 font-medium">
+                              {milestone.stats}
+                            </div>
+                          </div>
+
+                          {/* Hover Effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 to-green-500/5
+                            opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Timeline Node */}
+                      <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 
+                        bg-green-500 rounded-full border-4 border-black"
+                      >
+                        <div className="absolute inset-0 animate-ping 
+                          bg-green-500 rounded-full opacity-20"
+                        />
                       </div>
                     </motion.div>
                   ))}
+                </div>
+              </div>
+
+              {/* Current Status */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="text-center mt-20"
+              >
+                <div className="inline-block p-6 rounded-2xl bg-black/30 backdrop-blur-sm
+                  border border-white/10 hover:border-green-500/30
+                  transition-all duration-300"
+                >
+                  <h3 className="text-2xl font-bold mb-2">Where We Are Today</h3>
+                  <p className="text-gray-400">
+                    Leading KIIT's technical ecosystem with 1000+ active members and growing
+                  </p>
                 </div>
               </motion.div>
 

@@ -4,7 +4,8 @@
 
 @layer base {
   body {
-    @apply bg-black text-white;
+    background-color: #000;
+    color: #fff;
   }
 }
 
@@ -54,4 +55,333 @@
 @keyframes cursor {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 20, 0, 0.95);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.grid-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 128, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 128, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform-origin: center;
+  transform: perspective(1000px) rotateX(45deg) translateY(-50%);
+  mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,0.8) 65%,
+    rgba(0,0,0,0) 100%);
+}
+
+.grid-glow {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at top center,
+      rgba(0, 255, 128, 0.15) 0%,
+      rgba(0, 255, 128, 0.05) 45%,
+      transparent 70%);
+}
+
+.floating-orb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.07;
+  background: rgb(0, 255, 128);
+  top: 10%;
+  left: -300px;
+  animation: float1 20s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.07;
+  background: rgb(0, 255, 128);
+  bottom: 10%;
+  right: -300px;
+  animation: float2 25s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(100px, -50px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-100px, 50px); }
+}
+
+.relative {
+  position: relative;
+  z-index: 40;
+}
+
+@keyframes animate-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes animate-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -20px) scale(1.1); }
+  50% { transform: translate(0, 20px) scale(1); }
+  75% { transform: translate(-20px, -20px) scale(0.9); }
+}
+
+.ambient-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(0, 255, 128, 0.03) 0%,
+    rgba(0, 255, 128, 0.01) 40%,
+    transparent 80%
+  );
+  pointer-events: none;
+}
+
+/* Updated Grid Pattern */
+.grid-pattern {
+  background-image: 
+    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(1000px) rotateX(60deg) translateY(-30%) scale(3);
+  transform-origin: center top;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 40%,
+    rgba(0, 0, 0, 0) 80%
+  );
+}
+
+/* Ambient glow */
+.glow-overlay {
+  background: 
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(0, 255, 128, 0.15) 0%,
+      rgba(0, 255, 128, 0.05) 25%,
+      transparent 70%
+    );
+}
+
+/* Floating orbs */
+.floating-orb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.05;
+  background: rgb(0, 255, 128);
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}
+
+/* Content styles */
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+
+/* Button styles */
+.button-primary {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500 
+         hover:from-green-600 hover:to-emerald-600
+         text-white font-medium px-6 py-3 rounded-lg
+         transition-all duration-300;
+}
+
+.button-secondary {
+  @apply bg-zinc-900/80 hover:bg-zinc-800
+         border border-white/10 hover:border-white/20
+         text-white font-medium px-6 py-3 rounded-lg
+         transition-all duration-300;
+}
+
+/* Card styles */
+.card {
+  @apply bg-zinc-900/50 backdrop-blur-sm
+         border border-white/10 hover:border-white/20
+         rounded-xl p-6 transition-all duration-300;
+}
+
+/* Animation keyframes */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Make sure main content container has proper z-index */
+.relative {
+  position: relative;
+  z-index: 40;
+}
+
+/* Ensure all content sections have proper z-index */
+main, footer {
+  position: relative;
+  z-index: 40;
+}
+
+/* Add a subtle gradient overlay */
+.gradient-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 20, 0, 0.8)
+  );
+  z-index: 1;
+}
+
+/* Animation for gradient text */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Stats box hover effect */
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+/* Button hover effects */
+.group:hover .group-hover\:translate-x-1 {
+  transform: translateX(0.25rem);
+}
+
+/* Make sure content is visible */
+.relative {
+  position: relative;
+  z-index: 40;
+}
+
+/* Stats Card Hover Effect */
+.stats-card {
+  transform: translateY(0);
+  box-shadow: 0 0 20px -5px rgba(0, 255, 128, 0.1);
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px -5px rgba(0, 255, 128, 0.2);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 40, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 128, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 128, 0.3);
+}
+
+/* Optional: Add subtle animation to the grid */
+@keyframes subtle-float {
+  0%, 100% { transform: perspective(1000px) rotateX(60deg) translateY(-50%) scale(2); }
+  50% { transform: perspective(1000px) rotateX(60deg) translateY(-52%) scale(2); }
+}
+
+.grid-pattern {
+  animation: subtle-float 20s ease-in-out infinite;
+}
+
+/* Subtle grid animation */
+@keyframes grid-float {
+  0%, 100% { 
+    transform: perspective(1000px) rotateX(60deg) translateY(-30%) scale(3);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: perspective(1000px) rotateX(60deg) translateY(-32%) scale(3);
+    opacity: 0.4;
+  }
+}
+
+.grid-pattern {
+  animation: grid-float 20s ease-in-out infinite;
+}
+
+/* Enhanced ambient effects */
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(16, 185, 129, 0.08) 0%,
+    rgba(16, 185, 129, 0.03) 25%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* Optional: Add scanline effect for more tech feel */
+@keyframes scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(16, 185, 129, 0.05) 10%,
+    transparent 100%
+  );
+  height: 100px;
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+  opacity: 0.5;
 }
