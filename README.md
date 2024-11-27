@@ -130,4 +130,59 @@ To create a vibrant technical community that empowers students with practical kn
 
 The project is organized as follows:
 
-```gfg-kiit-website/ ├── src/ │ ├── components/ │ │ ├── common/ # Shared components used across the app │ │ ├── layout/ # Layout-related components (e.g., headers, footers) │ │ └── sections/ # Components for specific sections of pages │ ├── pages/ │ │ ├── Home/ # Homepage components │ │ ├── Events/ # Events-related pages │ │ ├── Projects/ # Projects showcase │ │ ├── Team/ # Team member pages │ │ └── Achievements/ # Achievements and milestones │ ├── styles/ # Global and component-specific styles │ └── utils/ # Utility functions and helpers ├── public/ # Static assets like images, logos, etc. ├── package.json # Project dependencies and scripts └── README.md # Project documentation```
+```
+gfg-kiit-website/
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   ├── layout/
+│   │   └── sections/
+│   ├── pages/
+│   │   ├── Home/
+│   │   ├── Events/
+│   │   ├── Projects/
+│   │   ├── Team/
+│   │   └── Achievements/
+│   ├── styles/
+│   └── utils/
+├── public/
+├── package.json
+└── README.md
+```
+
+## Contributing 🤝
+
+We welcome contributions from everyone! Here's how you can help:
+
+1. **Fork the repository**:
+   ```bash
+   git fork https://github.com/your-username/gfg-kiit-website.git
+
+2. **Create a feature branch**:
+   ```bash
+   git checkout -b feature/AmazingFeature
+
+3. **Commit your changes**:
+   ```bash
+   git commit -m "Add AmazingFeature"
+
+4. **Push to the branch**:
+   ```bash
+   git push origin feature/AmazingFeature
+
+5. **Open a Pull Request on GitHub**.
+
+
+## Acknowledgments 🙏
+
+- **GeeksforGeeks** for their continuous support.
+- **KIIT University** for providing a thriving community platform.
+- **Community members and contributors** for making this chapter successful.
+
+---
+
+<div align="center"> 
+  <p>Made with ❤️ by the GFG KIIT Student Chapter Team</p> 
+  <p>© 2024 GeeksforGeeks KIIT Student Chapter. All rights reserved.</p> 
+</div>
+
