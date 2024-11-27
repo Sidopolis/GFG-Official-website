@@ -1,8 +1,20 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Users, ExternalLink, ArrowRight } from 'lucide-react';
 
+interface Event {
+  title: string;
+  date: string;
+  time: string;
+  venue: string;
+  type: string;
+  image: string;
+  description: string;
+  registrationLink: string;
+  capacity: string;
+}
+
 export default function Events() {
-  const events = {
+  const events: { upcoming: Event[], past: Event[] } = {
     upcoming: [
       {
         title: "Hackathon 2024",
