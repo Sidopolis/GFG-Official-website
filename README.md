@@ -126,8 +126,8 @@ To create a vibrant technical community that empowers students with practical kn
    ```bash
    npm run build
 
-##Project Structure 📁
+## Project Structure 📁
 
 The project is organized as follows:
 
-gfg-kiit-website/ ├── src/ │ ├── components/ │ │ ├── common/ # Shared components used across the app │ │ ├── layout/ # Layout-related components (e.g., headers, footers) │ │ └── sections/ # Components for specific sections of pages │ ├── pages/ │ │ ├── Home/ # Homepage components │ │ ├── Events/ # Events-related pages │ │ ├── Projects/ # Projects showcase │ │ ├── Team/ # Team member pages │ │ └── Achievements/ # Achievements and milestones │ ├── styles/ # Global and component-specific styles │ └── utils/ # Utility functions and helpers ├── public/ # Static assets like images, logos, etc. ├── package.json # Project dependencies and scripts └── README.md # Project documentation
+```gfg-kiit-website/ ├── src/ │ ├── components/ │ │ ├── common/ # Shared components used across the app │ │ ├── layout/ # Layout-related components (e.g., headers, footers) │ │ └── sections/ # Components for specific sections of pages │ ├── pages/ │ │ ├── Home/ # Homepage components │ │ ├── Events/ # Events-related pages │ │ ├── Projects/ # Projects showcase │ │ ├── Team/ # Team member pages │ │ └── Achievements/ # Achievements and milestones │ ├── styles/ # Global and component-specific styles │ └── utils/ # Utility functions and helpers ├── public/ # Static assets like images, logos, etc. ├── package.json # Project dependencies and scripts └── README.md # Project documentation```
