@@ -113,3 +113,21 @@ To create a vibrant technical community that empowers students with practical kn
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/gfg-kiit-website.git
+2. Navigate to the project directory:
+   ```bash
+   cd gfg-kiit-website
+3. Install dependencies:
+   ```bash
+   npm install
+4. Start the development server:
+   ```bash
+   npm run dev
+5. Build for production:
+   ```bash
+   npm run build
+
+##Project Structure 📁
+
+The project is organized as follows:
+
+gfg-kiit-website/ ├── src/ │ ├── components/ │ │ ├── common/ # Shared components used across the app │ │ ├── layout/ # Layout-related components (e.g., headers, footers) │ │ └── sections/ # Components for specific sections of pages │ ├── pages/ │ │ ├── Home/ # Homepage components │ │ ├── Events/ # Events-related pages │ │ ├── Projects/ # Projects showcase │ │ ├── Team/ # Team member pages │ │ └── Achievements/ # Achievements and milestones │ ├── styles/ # Global and component-specific styles │ └── utils/ # Utility functions and helpers ├── public/ # Static assets like images, logos, etc. ├── package.json # Project dependencies and scripts └── README.md # Project documentation
