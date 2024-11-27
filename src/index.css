@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-white;
+  }
+}
+
+.timeline-dot::before {
+  content: '';
+  @apply absolute left-0 w-4 h-4 bg-white rounded-full -translate-x-1/2;
+}
+
+.timeline-line::after {
+  content: '';
+  @apply absolute left-0 w-px h-full bg-white/20 -translate-x-1/2;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.typewriter {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.typewriter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: #22c55e;
+  animation: cursor 0.8s infinite;
+}
+
+@keyframes cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
